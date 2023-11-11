@@ -53,7 +53,7 @@ class ImageDownloader:
 
             page_source = driver.page_source
             soup = BeautifulSoup(page_source, 'html.parser')
-            img_tags = soup.find_all('img', class_='serp-item__thumb justifier__thumb')
+            img_tags = soup.find_all('img', class_='SimpleImage-Image SimpleImage-Image_clickablb')
             new_urls = [img['src'] for img in img_tags]
 
             new_urls = list(set(new_urls))

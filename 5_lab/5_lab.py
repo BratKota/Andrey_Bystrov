@@ -11,7 +11,7 @@ class ErrorAnalyzerApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.layout = QVBoxLayout()
-        self.setWindowTitle("Error Analyzer")
+        self.setWindowTitle("Interface")
         self.setGeometry(100, 100, 800, 600)
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)

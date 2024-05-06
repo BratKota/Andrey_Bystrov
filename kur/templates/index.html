@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Просмотр отзывов о фильме</title>
+    <style>
+        /* Стили для формы */
+        body {
+            background-color: #04c3b6; /* Цвет фона */
+        }
+        /* Стили для кнопок */
+        .film-button {
+            margin-right: 10px; /* Отступ справа между кнопками */
+        }
+        /* Расстояние между меткой и кнопками */
+        #filmForm {
+            margin-bottom: 20px; /* Расстояние между меткой и кнопками */
+        }
+    </style>
+</head>
+<body>
+    <h1>Просмотр отзывов о фильме</h1>
+    {% if username %}
+    <p>Здравствуйте, {{ username }}!</p>
+    <ul>
+        {% for log in user_logs %}
+        <li>{{ log[0] }} просмотрен в {{ log[1] }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Здравствуйте, Гость!</p>
+    {% endif %}
+    <form id="filmForm" action="/reviews" method="post">
+        <label for="film_id">Выберите фильм:</label><br>
+        <select name="film_id" id="film_id">
+            <option value="251733">Аватар</option>
+            <option value="2213">Титаник</option>
+            <option value="326">Побег из Шоушенка</option>
+        </select>
+        <button type="submit" class="film-button">Показать отзывы</button>
+    </form>
+</body>
+</html>

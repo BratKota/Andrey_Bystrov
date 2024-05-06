@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отзывы о фильме {{ film_name }}</title>
+    <style>
+        /* Стили для формы */
+        body {
+            background-color: #04c3b6; /* Цвет фона */
+        }
+        /* Стили для кнопок */
+        .film-button {
+            margin-right: 10px; /* Отступ справа между кнопками */
+        }
+        /* Расстояние между меткой и кнопками */
+        #filmForm {
+            margin-bottom: 20px; /* Расстояние между меткой и кнопками */
+        }
+    </style>
+</head>
+<body style="background-color: #04c3b6;">
+    <h1>Отзывы о фильме "{{ film_name }}"</h1>
+    <p>Film ID: {{ film_id }}</p> <!-- Добавлено для отладки -->
+    <!-- Добавляем статистику отзывов -->
+    <p>Позитивных отзывов: {{ positive_count }}</p>
+    <p>Нейтральных отзывов: {{ neutral_count }}</p>
+    <p>Негативных отзывов: {{ negative_count }}</p>
+    <form action="/export_reviews" method="post">
+        <input type="hidden" name="film_id" value="{{ film_id }}">
+        <input type="hidden" name="film_name" value="{{ film_name }}">
+        <button type="submit">Экспорт отзывов</button>
+    </form>
+    <ul>
+    {% for review in reviews %}
+        <li>
+            <p>Тип отзыва: {{ review[2] }}</p>
+            <p>Текст отзыва: {{ review[3] }}</p>
+            <form action="/delete_review" method="post">
+                <input type="hidden" name="review_id" value="{{ review[0] }}">
+                <input type="hidden" name="film_id" value="{{ film_id }}">  <!-- Добавляем скрытое поле с ID фильма -->
+                <button type="submit">Удалить отзыв</button>
+            </form>
+            <hr>
+        </li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

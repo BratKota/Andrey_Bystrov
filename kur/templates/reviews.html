@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отзывы о фильме {{ film_name }}</title>
+    <style>
+        /* Стили для формы */
+        body {
+            background-color: #04c3b6; /* Цвет фона */
+            font-family: Arial, sans-serif; /* Семейство шрифтов */
+            color: #fff; /* Цвет текста */
+        }
+        h1 {
+            text-align: center; /* Выравнивание заголовка по центру */
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #028a79; /* Цвет контейнера */
+            border-radius: 10px; /* Скругленные углы */
+        }
+        .film-button, .back-button, .delete-button {
+            margin: 10px;
+            padding: 10px 20px;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+        }
+        .film-button {
+            background-color: #036960;
+        }
+        .back-button {
+            background-color: #ff5c5c; /* Цвет кнопки назад */
+        }
+        .delete-button {
+            background-color: #ff4747; /* Цвет кнопки удаления */
+            margin-top: 10px;
+            padding: 8px 16px;
+        }
+        .delete-button:hover {
+            background-color: #ff0000; /* Цвет кнопки удаления при наведении */
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #036960;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            position: relative; /* Для позиционирования кнопки удаления */
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Отзывы о фильме "{{ film_name }}"</h1>
+        <a href="/index" class="back-button">Назад</a>
+        <p>Film ID: {{ film_id }}</p> <!-- Добавлено для отладки -->
+        <!-- Добавляем статистику отзывов -->
+        <p>Позитивных отзывов: {{ positive_count }}</p>
+        <p>Нейтральных отзывов: {{ neutral_count }}</p>
+        <p>Негативных отзывов: {{ negative_count }}</p>
+        <form action="/export_reviews" method="post">
+            <input type="hidden" name="film_id" value="{{ film_id }}">
+            <input type="hidden" name="film_name" value="{{ film_name }}">
+            <button type="submit" class="film-button">Экспорт отзывов</button>
+        </form>
+        <ul>
+        {% for review in reviews %}
+            <li>
+                <p>Тип отзыва: {{ review[2] }}</p>
+                <p>Текст отзыва: {{ review[3] }}</p>
+                <form action="/delete_review" method="post">
+                    <input type="hidden" name="review_id" value="{{ review[0] }}">
+                    <input type="hidden" name="film_id" value="{{ film_id }}">  <!-- Добавляем скрытое поле с ID фильма -->
+                    <button type="submit" class="delete-button">Удалить отзыв</button>
+                </form>
+                <hr>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

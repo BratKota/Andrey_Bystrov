@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Просмотр отзывов о фильме</title>
+    <style>
+        /* Основные стили */
+        body {
+            background-color: #04c3b6; /* Цвет фона */
+            font-family: Arial, sans-serif; /* Семейство шрифтов */
+            color: #fff; /* Цвет текста */
+        }
+        h1 {
+            text-align: center; /* Выравнивание заголовка по центру */
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #028a79; /* Цвет контейнера */
+            border-radius: 10px; /* Скругленные углы */
+        }
+        .film-button, .exit-button {
+            margin: 10px;
+            padding: 10px 20px;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+        }
+        .film-button {
+            background-color: #036960;
+        }
+        .exit-button {
+            background-color: #ff5c5c; /* Цвет кнопки "Выйти" */
+        }
+        .exit-button:hover {
+            background-color: #ff0000; /* Цвет кнопки "Выйти" при наведении */
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: #036960;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        select {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #036960;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #024f4a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Просмотр отзывов о фильме</h1>
+        {% if username %}
+        <p>Здравствуйте, {{ username }}!</p>
+        <ul>
+            {% for log in user_logs %}
+            <li>{{ log[0] }} просмотрен в {{ log[1] }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Здравствуйте, Гость!</p>
+        {% endif %}
+        <form id="filmForm" action="/reviews" method="post">
+            <label for="film_id">Выберите фильм:</label>
+            <select name="film_id" id="film_id">
+                <option value="251733">Аватар</option>
+                <option value="2213">Титаник</option>
+                <option value="326">Побег из Шоушенка</option>
+            </select>
+            <button type="submit" class="film-button">Показать отзывы</button>
+        </form>
+        <form action="/" method="get">
+            <button type="submit" class="exit-button">Выйти</button>
+        </form>
+    </div>
+</body>
+</html>
